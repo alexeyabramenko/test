@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/alexeyabramenko/test/issues"
   },
-  "homepage": "https://github.com/alexeyabramenko/test#readme"
+  "homepage": "https://github.com/alexeyabramenko/test#readme",
+  "dependencies": {
+    "serve-favicon": "^2.5.0"
+  }
 }
