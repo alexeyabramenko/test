@@ -2,7 +2,8 @@ const http = require('http');
 const fs = require('fs');
 
 const server = http.createServer((req, res) => {
-    const body = fs.readFileSync(`./public/${req.url}`);
+    console.log(req.url);
+    const body = fs.readFileSync(`./public${req.url}`);
     res.end(body);
 });
 
