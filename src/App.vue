@@ -9,7 +9,6 @@
             <AddForm />
         </div>
     </div>
-    
 </template>
 
 <script>
@@ -46,6 +45,11 @@ export default {
 </script>
 
 <style module>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: rgba(222, 184, 135, 0.418);
+    }
     .myheader {
         color: red;
     }

@@ -24,6 +24,8 @@ export default {
         border: none;
         border-radius: 10rem;
         background-color: hsl(220, 90%, 56%);
+        box-shadow: 10px 6px 8px 9px rgb(32 0 0 / 20%);
+        margin-bottom: 20px;
     }
     .button:focus {
         outline: none;

@@ -57,6 +57,7 @@ export default {
         align-content: center;
         background-color: rgba(245, 222, 179, 0.267);
         padding: 10px;
+        box-shadow: 10px 6px 8px 9px rgb(32 0 0 / 20%);
     }
     .item__img {
         width: 200px;
