@@ -28,7 +28,7 @@ export default {
             'addItem'
         ]),
         addGood () {
-            const goodToAdd = { name: this.name, price: this.price, img: '' }
+            const goodToAdd = { name: this.name, price: this.price, img: '', count: 1}
             this.addItem(goodToAdd)
         }
     }

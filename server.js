@@ -42,12 +42,17 @@ app.post('/cartitem', (req, res) => {
     fs.readFile(filePath, 'utf8', (err, data) => {
         let cartList = JSON.parse(data || {});
         const newItem = req.body;
-        cartList = { ...cartList, ...newItem };
+        const id = Object.keys(newItem);
+        if (id in cartList) {
+            cartList[id].count += 1;
+        } else {
+            cartList = { ...cartList, ...newItem };
+        }
         fs.writeFile(filePath, JSON.stringify(cartList), (err) => {
             if (err) {
                 console.log(err);
             }
-            res.send(cartList);
+                res.send(cartList);
         })
     })
 });
@@ -58,17 +63,18 @@ app.post('/deleteitemscart', (req, res) => {
     fs.readFile(filePath, 'utf8', (err, data) => {
         let cartList = JSON.parse(data || {});
         const newItem = req.body;
-        console.log(newItem);
-        const newItemId = Object.keys(newItem)[0];
-        console.log(newItemId)
-        delete cartList[String(newItemId)];
-        console.log(cartList)
+        const id = Object.keys(newItem);
+        if (newItem[id].count > 1) {
+            cartList[id].count -= 1;
+        } else {
+            delete cartList[id];
+        }
         fs.writeFile(filePath, JSON.stringify(cartList), (err) => {
             if (err) {
                 console.log(err);
             }
             res.send(cartList);
-        })
+        }) 
     })
 })
 
@@ -77,7 +83,6 @@ app.get('/cartitems', function(req, res) {
         res.end(data);
     });
 });
-
 
 app.listen(PORT, () => {
     console.log('Server started on port', PORT);

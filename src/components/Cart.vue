@@ -1,6 +1,7 @@
 <template>
     <div>
         <Header :message="header"/>
+        <div :class="[$style.cart__header]">Общая стоимость товаров: {{ getFullPrice }}</div>
         <div :class="[$style.cart__container]">
             <CartItem
                 v-for="id in getItemsInCart"
@@ -39,12 +40,12 @@ export default {
             'getCartItems'
         ]),
         loadCart () {
-            this.getCartItems()
+            this.getCartItems();
         }
     },
     created () {
         this.loadCart();
-    },
+    }
 }
 </script>
 
@@ -55,5 +56,10 @@ export default {
         width: 800px;
         gap: 30px;
         flex-wrap: wrap;
+    }
+    .cart__header {
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 20px;
     }
 </style>

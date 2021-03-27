@@ -31,7 +31,6 @@ export default {
             const cartItem = {};
             const item = { ...this.getItemData }
             cartItem[id] = item;
-            console.log(cartItem);
             this.addItemInCart(cartItem);
         },
     },

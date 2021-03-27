@@ -16,9 +16,33 @@ export default new Vuex.Store({
             state.itemsOnPage.push(...Object.keys(payload.newData));
         },
         setCart (state, data) {
-            state.cartData = { ...state.data, ...data.cartData };
+            console.log(data)
+            state.cartData = { ...data.cartData };
             state.itemsInCart.push(...Object.keys(data.cartData));
+        },
+
+        changeCart (state, newData) {
+            const id = Object.keys(newData);
+            if (id in state.cartData) {
+                state.cartData[id].count += 1;
+            } else {
+                state.cartData = { ...state.cartData, ...newData };
+                console.log(state.cartData);
+                state.itemsInCart = [];
+                state.itemsInCart.push( ...Object.keys(state.cartData));
+            }
+        },
+
+        removeItem (state, data) {
+            const id = Object.keys(data);
+            if (state.cartData[id].count == 1) {
+                delete state.cartData[id];
+                state.itemsInCart = [ ...Object.keys(state.cartData)];
+            } else {
+                state.cartData[id].count -= 1;
+            }
         }
+
     },
     getters: {
         getData: state => state.data,
@@ -26,8 +50,8 @@ export default new Vuex.Store({
         getCartData: state => state.cartData,
         getItemsInCart: state => state.itemsInCart,
         getFullPrice: state => {
-            const keys = state.itemsOnPage;
-            return keys.reduce((res, cur) => res + state.data[cur].price, 0);
+            const keys = state.itemsInCart;
+            return keys.reduce((res, cur) => res + state.cartData[cur].price * state.cartData[cur].count, 0);
         },
     },
     actions: {
@@ -51,7 +75,7 @@ export default new Vuex.Store({
                 }
             })
         },
-        addItemInCart ({}, data) {
+        addItemInCart ({ commit, state }, data) {
             fetch('/cartitem', {
                 method: 'POST',
                 body: JSON.stringify(data),
@@ -59,8 +83,11 @@ export default new Vuex.Store({
                     'Content-Type': 'application/json'
                 }
             })
-        },
-        removeItemInCart ({}, data) {
+                .then(res => {
+                    commit('changeCart', data);
+                })
+        }, 
+        removeItemInCart ({ commit, state }, data) {
             fetch('/deleteitemscart', {
                 method: 'POST',
                 body: JSON.stringify(data),
@@ -68,7 +95,11 @@ export default new Vuex.Store({
                     'Content-Type': 'application/json'
                 }
             })
+                .then(res => {
+                    commit('removeItem', data);
+                })
         },
+
         getCartItems ({ commit, state }) {
             fetch('/cartitems', {
                 method: 'GET',

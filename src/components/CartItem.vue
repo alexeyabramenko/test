@@ -2,8 +2,9 @@
     <div>
         <div :class="[$style.cart__item]">
             <img :class="[$style.cart__img]" :src="getCartItem.img">
-            <a :class="[$style.cart__link]" href="#"> Наименование товара: {{getCartItem.name}}</a>
-            <p :class="[$style.cart__price]">Цена: $ {{getCartItem.price}}</p>
+            <a :class="[$style.cart__link]" href="#"> Наименование товара: {{ getCartItem.name }}</a>
+            <p :class="[$style.cart__price]">Цена: $ {{ getCartItem.price }}</p>
+            <p :class="[$style.cart__count]">Количество товара в корзине: {{ getCartItem.count }}</p>
             <Button @clicked="removeItem" :textButton="deleteItem"/>
         </div>
     </div>
@@ -28,12 +29,9 @@ export default {
         ]),
         removeItem () {
             const id = this.id;
-            console.log(id);
             const cartItem = {};
             const item = { ...this.getCartItem }
-            console.log(item);
             cartItem[id] = item;
-            console.log(cartItem)
             this.removeItemInCart(cartItem);
         }
     },
@@ -73,8 +71,10 @@ export default {
         font-size: 16px;
     }
 
-    .cart__price {
+    .cart__price, .cart__count {
         font-weight: bold;
+        width: 200px;
+        text-align: left;
     }
 
 </style>
